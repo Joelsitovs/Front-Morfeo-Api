@@ -48,9 +48,9 @@
           <input
             type="email"
             [ngClass]="{'border-red-500': email.invalid && email.touched,'border-[#161616]': !(email.invalid && email.touched)}"
-
             spellcheck="false"
-
+            autocomplete="email"
+            inputmode="email"
             class="w-full p-2 rounded-md border dark:bg-[#070707] focus:ring-0 transition duration-300 ease-in-out tracking-wider hover:border-blue-500 focus:border-blue-500 shadow-inner"
             formControlName="email"
           />

@@ -12,6 +12,8 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,5 +29,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideFirebaseApp(() => initializeApp(environment.firebaseConf)),
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
+
+    provideAnimations()
   ],
 };

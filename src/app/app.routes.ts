@@ -33,6 +33,7 @@ export const appRoutes: Route[] = [
       ),
     canActivate: [authGuard, RoleGuard],
   },
+
   {
     path: '**',
     redirectTo: 'login',

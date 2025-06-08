@@ -1,0 +1,108 @@
+<section
+  #presentacion
+  id="Inicio"
+  class="w-full min-h-[calc(100vh-64px)] flex flex-col sm:flex-row items-center justify-center  px-4  overflow-hidden border-none"
+>
+  <div
+    class="w-full h-full flex flex-col-reverse sm:flex-row items-center justify-center"
+  >
+    <div class="w-full sm:w-1/2 h-full flex items-center justify-center">
+      <div class="w-full sm:w-[60%] flex flex-col justify-center">
+        <h1 #titulo
+            class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-gray-900 dark:text-white text-center sm:text-start "
+        >
+          Bienvenido a <span class="text-blue-600 dark:text-Semerald-400">Morfeo3D</span>
+        </h1>
+        <p #descripcion class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-6">
+          Morfeo3D: Tu socio experto en impresión 3D personalizada. Creamos
+          prototipos funcionales y piezas únicas con precisión, rapidez y
+          materiales de última generación.
+        </p>
+        <div #botones class="flex gap-4 sm:flex-row flex-col sm:items-center">
+          <a
+            href="#servicios"
+            class="whitespace-nowrap text-xs sm:text-lg inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-7 rounded-lg"
+          >
+            Ver servicios
+          </a>
+
+          <a
+            routerLink="/vista-previa"
+            class="whitespace-nowrap text-xs sm:text-lg inline-block text-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-7 rounded-lg "
+          >
+            Subir Modelo 3D
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: CONTENIDO VISUAL -->
+    <div class="w-full sm:w-1/2 h-full flex items-center justify-center">
+      <img
+        [ngSrc]="imageSrc"
+        width="640"
+        height="640"
+        alt="Robot Morfeo3D"
+        class="mx-auto w-96 md:w-[40rem]"
+        priority
+        fetchpriority="high"
+        decoding="async"
+      />
+
+    </div>
+
+  </div>
+</section>
+
+<section
+  id="servicios"
+  class="w-full min-h-screen flex flex-col sm:flex-row items-center justify-center pt-16 px-4  overflow-hidden border-none"
+>
+  <div class="flex flex-col items-center justify-center w-full px-4">
+    <h1
+      class="text-4xl md:text-6xl font-bold mb-4 dark:text-white text-gray-800 text-center "
+    >
+      Nuestros
+      <span class="text-blue-500"> Servicios</span>
+    </h1>
+    <p
+      class="text-lg md:text-xl dark:text-gray-300 text-gray-600 mb-6 text-center w-full sm:w-[70%]"
+    >
+      En Morfeo3D ofrecemos servicios profesionales de <strong>impresión 3D personalizada</strong>,
+      <strong>diseño de modelos 3D</strong>, <strong>escaneado 3D</strong> y <strong>prototipado rápido</strong>.
+      Nuestro objetivo es ayudarte a convertir tus ideas en productos reales con precisión y calidad.
+      Contamos con la tecnología y experiencia para acompañarte en todo el proceso.
+    </p>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4 w-full sm:w-[70%]"
+    >
+      <div
+        *ngFor="let servicio of servicios"
+        class="dark:bg-[#111c2f] rounded-3xl p-6 shadow-lg
+         hover:scale-[1.04] transition-all duration-300
+         border border-gray-300 dark:border-[#1e3a8a]"
+      >
+
+        <img
+          [ngSrc]="servicio.iconurl"
+          [alt]="servicio.title"
+          width="64"
+          height="64"
+          class="w-16 h-16 mb-4 mx-auto"
+          loading="lazy"
+          decoding="async"
+        />
+
+
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+          {{ servicio.title }}
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">
+          {{ servicio.description }}
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -10,8 +10,15 @@ const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('src/app/pages/home.component').then(
+          import('src/app/pages/inicio/home.component').then(
             (m) => m.HomeComponent
+          ),
+      },
+      {
+        path: 'vista-previa',
+        loadComponent: () =>
+          import('src/app/pages/vista-previa/vista-previa.component').then(
+            (m) => m.VistaPreviaComponent
           ),
       },
     ],

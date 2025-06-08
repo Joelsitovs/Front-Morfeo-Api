@@ -3,3 +3,25 @@
 @tailwind utilities;
 
 /* You can add global styles to this file, and also import other style files */
+html {
+    scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    @apply bg-white dark:bg-[#121212];
+}
