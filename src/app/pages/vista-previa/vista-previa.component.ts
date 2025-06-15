@@ -9,6 +9,17 @@ import {
 import { StorageService } from '../../core/services/storage.service';
 import { ModelViewerComponent } from '../model-viewer/model-viewer.component';
 
+type EstadoArchivo = 'pendiente' | 'subiendo' | 'completado' | 'error';
+
+interface ArchivoItem {
+  file: File;
+  progreso: number;
+  estado: 'pendiente' | 'subiendo' | 'completado' | 'error';
+  localUrl: string;
+  remoteUrl?: string;
+}
+
+
 @Component({
   selector: 'app-vista-previa',
   imports: [ModelViewerComponent],
@@ -26,21 +37,18 @@ import { ModelViewerComponent } from '../model-viewer/model-viewer.component';
 export class VistaPreviaComponent {
   private storageService = inject(StorageService);
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   previewUrl: string | null = null;
-
-  limpiarTodo() {
-    this.archivos = [];
-    this.fileInput.nativeElement.value = '';
-  }
-
-  archivos: {
-    file: File;
-    progreso: number;
-    estado: 'pendiente' | 'subiendo' | 'completado' | 'error';
-    url?: string;
-  }[] = [];
+  archivos: ArchivoItem[] = [];
 
   isDragging = false;
+
+  limpiarTodo() {
+    this.archivos.forEach((item) => URL.revokeObjectURL(item.localUrl));
+    this.archivos = [];
+    this.previewUrl = null;
+    this.fileInput.nativeElement.value = '';
+  }
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -67,12 +75,25 @@ export class VistaPreviaComponent {
     this.fileInput.nativeElement.click();
   }
 
-  eliminarArchivo(item: { file: File; progreso: number; estado: string }) {
+  eliminarArchivo(item: ArchivoItem) {
+    URL.revokeObjectURL(item.localUrl);
     this.archivos = this.archivos.filter((a) => a !== item);
+
+    if (this.previewUrl === item.localUrl) {
+      this.previewUrl = this.archivos.length
+        ? this.archivos[this.archivos.length - 1].localUrl
+        : null;
+    }
+
     this.fileInput.nativeElement.value = '';
   }
 
-  simularCargaYSubir(item: any) {
+
+  seleccionarArchivo(item: ArchivoItem) {
+    this.previewUrl = item.localUrl;
+  }
+
+  simularCargaYSubir(item: ArchivoItem) {
     const bytes = item.file.size;
     const mb = bytes / (1024 * 1024);
 
@@ -83,7 +104,6 @@ export class VistaPreviaComponent {
     const intervalo = duracionTotal / pasos;
     let paso = 0;
 
-    // Easing tipo ease-in-out
     const easeInOut = (t: number) =>
       t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
@@ -99,7 +119,6 @@ export class VistaPreviaComponent {
         clearInterval(timer);
         item.progreso = 100;
         item.estado = 'completado';
-        this.previewUrl = URL.createObjectURL(item.file);
         this.subirArchivo(item);
       }
     }, intervalo);
@@ -110,43 +129,40 @@ export class VistaPreviaComponent {
 
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList[i];
-      const tiempoInicio = performance.now();
+      const localUrl = URL.createObjectURL(file);
 
-      // Esperamos un momento para simular la carga en memoria
-      setTimeout(() => {
-        const tiempoFin = performance.now();
-        const duracionCarga = tiempoFin - tiempoInicio;
+      const item: ArchivoItem = {
+        file,
+        progreso: 0,
+        estado: 'pendiente',
+        localUrl,
+      };
 
-        const item: {
-          file: File;
-          progreso: number;
-          estado: 'pendiente' | 'subiendo' | 'completado' | 'error';
-          tiempoSimulado?: number;
-        } = {
-          file,
-          progreso: 0,
-          estado: 'subiendo',
-          tiempoSimulado: duracionCarga || 2000,
-        };
+      this.archivos.push(item);
 
-        this.archivos.push(item);
-        this.simularCargaYSubir(item); // acá se anima y luego se sube
-      }, 0);
+      if (!this.previewUrl) {
+        this.previewUrl = localUrl;
+      }
+
+      this.simularCargaYSubir(item);
     }
   }
 
-  subirArchivo(archivo: any) {
+  subirArchivo(archivo: ArchivoItem) {
     this.storageService.subirArchivo(archivo.file).subscribe({
       next: (res) => {
         archivo.estado = 'completado';
-        archivo.url = res.url;
-        console.log('Archivo subido:', res);
+        archivo.remoteUrl = res.url; // mantenemos localUrl para el visor
       },
       error: (err) => {
         archivo.estado = 'error';
         console.error('Error al subir archivo:', err);
       },
     });
+  }
+  get archivoSeleccionado(): File | null {
+    const item = this.archivos.find((a) => a.localUrl === this.previewUrl);
+    return item?.file || null;
   }
 
   usarPiezaTest(event: MouseEvent) {

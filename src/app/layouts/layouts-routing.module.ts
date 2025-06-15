@@ -15,6 +15,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'materiales',
+        loadComponent: () =>
+          import('src/app/pages/materials/materials.component').then(
+            (m) => m.MaterialsComponent
+          ),
+      },
+      {
         path: 'vista-previa',
         loadComponent: () =>
           import('src/app/pages/vista-previa/vista-previa.component').then(

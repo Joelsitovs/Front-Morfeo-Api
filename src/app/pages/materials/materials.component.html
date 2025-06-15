@@ -1,0 +1,72 @@
+<section
+  id="Materiales"
+  class="w-full min-h-[calc(100vh-4rem)] flex flex-col sm:flex-row items-start justify-center  px-4  overflow-hidden "
+>
+  <div class="flex flex-col items-center justify-center w-full gap-8 ">
+    <h1
+      class="text-4xl md:text-5xl font-bold  dark:text-white text-gray-800 text-center "
+    >
+      Explora Nuestros
+      <span class="text-blue-500">Materiales</span>
+
+    </h1>
+    <div class="relative max-w-lg w-full ">
+      <i-lucide [img]="Search"
+                class="w-5 h-5  absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"></i-lucide>
+      <input
+        type="text"
+        class=" outline-none dark:text-white  w-full p-2 px-10 rounded-md border dark:bg-transparent focus:ring-0 transition duration-300 ease-in-out tracking-wider hover:border-blue-500 focus:border-blue-500"
+        placeholder="Buscar Materiales"
+        [(ngModel)]="filterText"
+        (ngModelChange)="onFilterChange()"
+      />
+    </div>
+
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mx-auto">
+      @for (material of filteredMaterials; track material.id) {
+        <div
+          class="dark:bg-[#111c2f] bg-white rounded-lg p-6 shadow-lg
+           hover:scale-[1.04] transition-all duration-300
+           border border-gray-300 dark:border-[#1e3a8a] max-w-[600px] w-full mx-auto"
+        >
+          <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+            <div
+              class="flex justify-center items-center min-w-[80px]">
+              <img
+                [ngSrc]="material.image_url"
+                width="80"
+                height="80"
+                alt="{{ material.name }}"
+                class="object-contain rounded-lg"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <h3 class="text-xl font-semibold">
+                {{ material.name }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm break-words">
+                {{ material.short_description }}
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600
+         rounded-lg px-4 py-2 sm:px-2 sm:py-1 md:px-4
+         hover:bg-gray-100 dark:hover:bg-gray-800
+         cursor-pointer transition-colors duration-200"
+            >
+              <i-lucide [img]="Plus" class="w-5 h-5 text-blue-500"></i-lucide>
+              <p class="text-gray-700 dark:text-gray-200 text-sm font-medium">
+                Info
+              </p>
+            </div>
+
+          </div>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

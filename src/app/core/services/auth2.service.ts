@@ -57,7 +57,6 @@ export class Auth2Service {
       })
       .pipe(
         map((user: any) => {
-          // Convertimos roles complejos a string[]
           const roles = Array.isArray(user.roles)
             ? user.roles.map((role: any) => role.name || role)
             : [];

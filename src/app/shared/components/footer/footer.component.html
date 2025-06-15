@@ -1,1 +1,57 @@
-<p>footer works!</p>
+<footer
+  class="flex justify-center flex-col w-full
+         bg-gradient-to-b from-white via-gray-100 to-gray-200
+         dark:from-[#121212] dark:via-[#1a1a1a] dark:to-[#333333]
+         text-gray-700 dark:text-gray-300
+         py-10 px-6 gap-6   backdrop-blur-sm
+">
+  <div
+    class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 "
+  >
+
+
+    <div
+      class=" p-4 rounded-xl h-full flex flex-col justify-center items-center text-center">
+      <h3 class="text-lg font-semibold mb-3">Contacto</h3>
+      <ul class="space-y-2 text-sm">
+        <li class="flex items-center gap-2">
+          <i-lucide [img]="Mail" class="w-5  mx-auto "></i-lucide>
+
+          <a href="mailto:info@morfeo3d.com" class="hover:text-[#1e64fa] transition">info&#64;morfeo3d.com</a>
+        </li>
+        <li class="flex items-center gap-2">
+          <i-lucide [img]="Phone" class="w-5  mx-auto "></i-lucide><a href="tel:+34123456789" class="hover:text-[#1e64fa] transition">+34 123 456 789</a>
+        </li>
+        <li class="flex items-center gap-2">
+          <i-lucide [img]="MapPin" class="w-5  mx-auto "></i-lucide>
+          Málaga, España
+        </li>
+      </ul>
+    </div>
+
+    <div class=" p-4 rounded-xl h-full flex flex-col justify-center items-center text-center">
+      <div class="-mt-4">
+        <h2 class="text-xl text-center font-bold mb-3 text-[#1e64fa]">Morfeo3D</h2>
+        <p class="text-sm text-center">
+          Expertos en impresión 3D, diseño personalizado, escaneado y prototipado. Hacemos realidad tus ideas con
+          precisión y calidad.
+        </p>
+      </div>
+    </div>
+    <div class=" p-4 rounded-xl h-full flex flex-col justify-center items-center">
+      <div>
+        <h3 class="text-lg font-semibold mb-3">Enlaces</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#servicios" class="hover:text-[#1e64fa] transition">Servicios</a></li>
+          <li><a href="#materiales" class="hover:text-[#1e64fa] transition">Materiales</a></li>
+          <li><a href="#contacto" class="hover:text-[#1e64fa] transition">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="w-full text-center text-xs text-gray-500 dark:text-gray-400">
+    © {{ currentYear }} Morfeo3D.
+  </div>
+
+</footer>

@@ -67,7 +67,7 @@
           <!--[fragment]="'Inicio'-->
           <a
             [routerLink]="['/']"
-            routerLinkActive="active"
+            fragment="Inicio"
             class="text-sm px-4 py-2 rounded-lg transition-all duration-300
          hover:bg-gray-200 dark:hover:bg-white/10
          dark:text-white text-gray-800 flex items-center gap-2"
@@ -83,7 +83,8 @@
           </a>
 
           <a
-            href="#servicios"
+            [routerLink]="'/'"
+            fragment="servicios"
             class="text-sm px-4 py-2 rounded-lg transition-all duration-300
          hover:bg-gray-200 dark:hover:bg-white/10
          dark:text-white text-gray-800 flex items-center gap-2"
@@ -98,7 +99,8 @@
             Servicios
           </a>
           <a
-            routerLink="/Materiales"
+            routerLink="/materiales"
+            fragment="materiales"
             routerLinkActive="active"
             class="text-sm px-4 py-2 rounded-lg transition-all duration-300
          hover:bg-gray-200 dark:hover:bg-white/10

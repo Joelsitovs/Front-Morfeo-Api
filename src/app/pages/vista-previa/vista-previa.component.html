@@ -1,7 +1,7 @@
 <section
   class="w-full min-h-[calc(100vh-64px)] flex flex-col items-center pt-10  text-black dark:text-white transition-colors duration-300"
 >
-  <div class="w-full max-w-4xl mx-auto px-4 flex flex-col  gap-5">
+  <div class="w-full max-w-7xl mx-auto px-4 flex flex-col  gap-5">
     <div class="flex justify-between items-center">
       <div class="flex flex-col items-center gap-2">
         <div class="rounded-full  border-2  p-2">
@@ -184,7 +184,11 @@
           </div>
           @for (item of archivos; track item) {
 
-            <div class="bg-[#1e1e1e] border border-[#52525b] rounded-lg p-2 flex flex-col gap-2">
+            <button
+              type="button"
+              class="bg-[#1e1e1e] border border-[#52525b] rounded-lg p-2 flex flex-col gap-2 cursor-pointer hover:bg-[#2a2a2a] transition-all w-full text-left"
+              (click)="seleccionarArchivo(item)"
+            >
               <div class="flex flex-col  w-full gap-3 mx-auto">
                 <div class="flex justify-between items-center gap-2 text-sm text-gray-400 ">
                   <div class="text-xs space-y-2">
@@ -229,19 +233,17 @@
                 }
 
               </div>
-            </div>
+            </button>
           }
 
         </div>
 
       </div>
       @if (previewUrl) {
-
-      <app-model-viewer
-
-        [modelUrl]="previewUrl"
-        [file]="archivos[archivos.length - 1].file"
-      />
+        <app-model-viewer
+          [modelUrl]="previewUrl"
+          [file]="archivoSeleccionado"
+        />
       }
 
 

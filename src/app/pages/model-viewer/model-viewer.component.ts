@@ -8,9 +8,9 @@ import {
   ViewChild
 } from '@angular/core';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 @Component({
   selector: 'app-model-viewer',
@@ -28,22 +28,36 @@ export class ModelViewerComponent implements AfterViewInit, OnChanges {
   private camera!: THREE.PerspectiveCamera;
   private controls!: OrbitControls;
   private modelAdded = false;
+  private lastUrl: string | null = null;
+  private modelCache = new Map<string, THREE.Object3D>();
 
   ngAfterViewInit() {
     this.initScene();
 
     if (this.modelUrl && this.file) {
-      const extension = this.file.name.split('.').pop()?.toLowerCase();
-      this.loadModel(this.modelUrl, extension);
+      this.tryLoadModel();
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['modelUrl'] && this.scene && this.modelUrl && this.file) {
-      const extension = this.file.name.split('.').pop()?.toLowerCase();
-      this.loadModel(this.modelUrl, extension);
+    if (
+      changes['modelUrl'] &&
+      this.scene &&
+      this.modelUrl &&
+      this.file &&
+      this.modelUrl !== this.lastUrl
+    ) {
+      this.tryLoadModel();
     }
   }
+  private tryLoadModel() {
+    const extension = this.file!.name.split('.').pop()?.toLowerCase();
+    if (!extension) return;
+
+    this.lastUrl = this.modelUrl;
+    this.loadModel(this.modelUrl!, extension);
+  }
+
 
   initScene() {
 
@@ -78,31 +92,51 @@ export class ModelViewerComponent implements AfterViewInit, OnChanges {
     fillLight.position.set(-2, -2, 2);
 
 
-    this.scene.add(fillLight);
-    this.scene.add(ambientLight);
-    this.scene.add(directionalLight);
+    this.scene.add(fillLight, ambientLight, directionalLight);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
 
-    this.animate();
+    this.renderer.setAnimationLoop(() => {
+      this.controls.update();
+      this.renderer.render(this.scene, this.camera);
+    });
+  }
+  private clearPreviousModel() {
+    const toRemove = this.scene.children.filter(obj => obj.userData['dynamic']);
+    toRemove.forEach(obj => {
+      if (obj instanceof THREE.Mesh) {
+        obj.geometry.dispose();
+        if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+        else obj.material.dispose();
+      }
+      this.scene.remove(obj);
+    });
+    this.modelAdded = false;
   }
 
   loadModel(url: string, extension: string | undefined) {
-    if (this.modelAdded) {
-      const toRemove = this.scene.children.filter(obj => obj.userData['dynamic']);
-      toRemove.forEach(obj => this.scene.remove(obj));
+    if (!extension) return;
 
-
-      this.modelAdded = false;
+    const cached = this.modelCache.get(url);
+    if (cached) {
+      this.clearPreviousModel();
+      this.scene.add(cached.clone());
+      this.modelAdded = true;
+      console.log('⚡ Modelo cargado desde cache');
+      return;
     }
 
+    this.clearPreviousModel();
     if (extension === 'glb' || extension === 'gltf') {
       const gltfLoader = new GLTFLoader();
       gltfLoader.load(
         url,
         (gltf) => {
-          this.scene.add(gltf.scene);
+          const sceneClone = gltf.scene.clone();
+          sceneClone.userData['dynamic'] = true;
+          this.modelCache.set(url, sceneClone);
+          this.scene.add(sceneClone);
           this.modelAdded = true;
           console.log('✅ Modelo GLTF cargado');
         },
@@ -114,8 +148,10 @@ export class ModelViewerComponent implements AfterViewInit, OnChanges {
       stlLoader.load(
         url,
         (geometry) => {
-          const baseMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
-          const mesh = new THREE.Mesh(geometry, baseMaterial);
+          geometry = geometry.clone().toNonIndexed();
+          geometry.computeVertexNormals();
+          const material = new THREE.MeshLambertMaterial({ color: 0xffffff });
+          const mesh = new THREE.Mesh(geometry, material);
 
           const edges = new THREE.EdgesGeometry(geometry);
           const edgeLines = new THREE.LineSegments(
@@ -125,8 +161,8 @@ export class ModelViewerComponent implements AfterViewInit, OnChanges {
 
           // Agrupar ambos
           const group = new THREE.Group();
-          group.add(mesh);
-          group.add(edgeLines);
+          group.add(mesh, edgeLines);
+
 
           // Escalar el grupo entero
           const box = new THREE.Box3().setFromObject(group);
@@ -136,14 +172,20 @@ export class ModelViewerComponent implements AfterViewInit, OnChanges {
           const scale = 1 / maxDim;
           group.scale.setScalar(scale);
 
-          const scaledBox = new THREE.Box3().setFromObject(group);
+         /* const scaledBox = new THREE.Box3().setFromObject(group);
           const center = new THREE.Vector3();
           scaledBox.getCenter(center);
+          group.position.sub(center);*/
+          const center = new THREE.Vector3();
+          new THREE.Box3().setFromObject(group).getCenter(center);
           group.position.sub(center);
 
           group.userData['dynamic'] = true;
           this.scene.add(group);
           this.modelAdded = true;
+
+          const groupClone = group.clone(true);
+          this.modelCache.set(url, groupClone);
 
           // Reajustar cámara y controles
           this.controls.target.set(0, 0, 0);

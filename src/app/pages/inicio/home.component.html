@@ -1,7 +1,7 @@
 <section
   #presentacion
   id="Inicio"
-  class="w-full min-h-[calc(100vh-64px)] flex flex-col sm:flex-row items-center justify-center  px-4  overflow-hidden border-none"
+  class="w-full min-h-[calc(100vh-4rem)] flex flex-col sm:flex-row items-center justify-center  px-4  overflow-hidden border-none"
 >
   <div
     class="w-full h-full flex flex-col-reverse sm:flex-row items-center justify-center"
@@ -37,7 +37,6 @@
       </div>
     </div>
 
-    <!-- COLUMNA DERECHA: CONTENIDO VISUAL -->
     <div class="w-full sm:w-1/2 h-full flex items-center justify-center">
       <img
         [ngSrc]="imageSrc"
@@ -57,17 +56,17 @@
 
 <section
   id="servicios"
-  class="w-full min-h-screen flex flex-col sm:flex-row items-center justify-center pt-16 px-4  overflow-hidden border-none"
+  class="w-full min-h-[calc(100vh-4rem)] flex flex-col sm:flex-row items-center justify-center  px-4  overflow-hidden "
 >
-  <div class="flex flex-col items-center justify-center w-full px-4">
+  <div class="flex flex-col items-center justify-center w-full gap-4">
     <h1
-      class="text-4xl md:text-6xl font-bold mb-4 dark:text-white text-gray-800 text-center "
+      class="text-4xl md:text-6xl font-bold dark:text-white text-gray-800 text-center "
     >
       Nuestros
       <span class="text-blue-500"> Servicios</span>
     </h1>
     <p
-      class="text-lg md:text-xl dark:text-gray-300 text-gray-600 mb-6 text-center w-full sm:w-[70%]"
+      class="text-lg md:text-xl dark:text-gray-300 text-gray-600  text-center w-full sm:w-[80%]"
     >
       En Morfeo3D ofrecemos servicios profesionales de <strong>impresión 3D personalizada</strong>,
       <strong>diseño de modelos 3D</strong>, <strong>escaneado 3D</strong> y <strong>prototipado rápido</strong>.
@@ -75,34 +74,145 @@
       Contamos con la tecnología y experiencia para acompañarte en todo el proceso.
     </p>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4 w-full sm:w-[70%]"
-    >
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6  w-full max-w-7xl mx-auto">
       <div
-        *ngFor="let servicio of servicios"
-        class="dark:bg-[#111c2f] rounded-3xl p-6 shadow-lg
-         hover:scale-[1.04] transition-all duration-300
-         border border-gray-300 dark:border-[#1e3a8a]"
+        class="flex flex-col justify-start h-full dark:bg-[#111c2f] rounded-3xl p-4 shadow-lg
+           hover:scale-[1.04] transition-all duration-300
+           border border-gray-300 dark:border-[#1e3a8a]"
       >
-
-        <img
-          [ngSrc]="servicio.iconurl"
-          [alt]="servicio.title"
-          width="64"
-          height="64"
-          class="w-16 h-16 mb-4 mx-auto"
-          loading="lazy"
-          decoding="async"
-        />
+        <i-lucide [img]="Printer" class="w-12 h-12 mb-3  mx-auto text-[#1e64fa]"></i-lucide>
 
 
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-          {{ servicio.title }}
+          Impresión 3D Personalizada
         </h3>
         <p class="text-gray-600 dark:text-gray-300 text-sm">
-          {{ servicio.description }}
-        </p>
+          Ofrecemos servicios de impresión 3D personalizados para satisfacer tus necesidades específicas. Desde
+          prototipos hasta piezas únicas, estamos aquí para ayudarte a dar vida a tus ideas. </p>
+      </div>
+      <div
+        class="flex flex-col justify-start h-full dark:bg-[#111c2f] rounded-3xl p-4 shadow-lg
+           hover:scale-[1.04] transition-all duration-300
+           border border-gray-300 dark:border-[#1e3a8a]"
+      >
+        <i-lucide [img]="PenTool" class="w-12 h-12 mb-3 mx-auto text-[#1e64fa]"></i-lucide>
+
+
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+          Diseño 3D Personalizado
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">
+          Nuestro equipo de expertos en diseño 3D está listo para crear modelos personalizados que se adapten a tus
+          requisitos. Ya sea para productos, piezas o proyectos creativos, estamos aquí para ayudarte a materializar tus
+          ideas. </p>
+      </div>
+      <div
+        class="flex flex-col justify-start h-full dark:bg-[#111c2f] rounded-3xl p-4 shadow-lg
+           hover:scale-[1.04] transition-all duration-300
+           border border-gray-300 dark:border-[#1e3a8a]"
+      >
+        <i-lucide [img]="Scan" class="w-12 h-12 mb-4 mx-auto text-[#1e64fa]"></i-lucide>
+
+
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+          Escaneo 3D
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">
+          Ofrecemos servicios de escaneo 3D de alta precisión para capturar objetos y crear modelos digitales
+          detallados. Ideal para ingeniería inversa, diseño y documentación de piezas existentes. </p>
+      </div>
+      <div
+        class="flex flex-col justify-start h-full dark:bg-[#111c2f] rounded-3xl p-4 shadow-lg
+           hover:scale-[1.04] transition-all duration-300
+           border border-gray-300 dark:border-[#1e3a8a]"
+      >
+        <i-lucide [img]="Zap" class="w-12 h-12 mb-4 mx-auto text-[#1e64fa]"></i-lucide>
+
+
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+          Prototipado Rápido
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">
+          Nuestro servicio de prototipado rápido te permite transformar tus ideas en prototipos funcionales en tiempo
+          récord. Acelera el proceso de desarrollo de productos con nuestra tecnología avanzada.</p>
+
       </div>
     </div>
+  </div>
+
+
+</section>
+
+
+<section
+  class="w-full min-h-[calc(100vh-4rem)] flex flex-col sm:flex-row items-center justify-center  px-4  overflow-hidden "
+>
+  <div class="flex flex-col items-center justify-center w-full gap-8 ">
+    <h1
+      class="text-4xl md:text-6xl font-bold  dark:text-white text-gray-800 text-center "
+    >
+      <span class="text-blue-500">Nuestros</span>
+      Materiales
+    </h1>
+    <p
+      class="text-lg md:text-xl dark:text-gray-300 text-gray-600  text-center w-full sm:w-[80%]"
+    >
+      En <strong>Morfeo3D</strong> te ofrecemos una amplia variedad de <strong>materiales para impresión 3D</strong>,
+      ideales para <strong>prototipado rápido</strong>, <strong>diseño de piezas personalizadas</strong> y
+      <strong>modelado 3D profesional</strong>. Contamos con servicios integrales de <strong>impresión 3D a
+      medida</strong>,
+      <strong>escaneado 3D de alta precisión</strong> y <strong>diseño digital</strong> para transformar tus ideas
+      en productos reales. Utilizamos tecnología avanzada y materiales de máxima calidad para garantizar
+      resultados óptimos en cada proyecto.
+    </p>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6  w-full max-w-7xl mx-auto">
+      @for (material of materials; track material.id) {
+        <div
+          class="dark:bg-[#111c2f] bg-white rounded-3xl p-6 shadow-lg
+           hover:scale-[1.04] transition-all duration-300
+           border border-gray-300 dark:border-[#1e3a8a] max-w-[600px] w-full mx-auto"
+        >
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div
+              class="flex justify-center items-center min-w-[80px]">
+              <img
+                [ngSrc]="material.image_url"
+                width="80"
+                height="80"
+                alt="{{ material.name }}"
+                class="object-contain rounded-lg"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <h3 class="text-xl font-semibold">
+                {{ material.name }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm break-words">
+                {{ material.short_description }}
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600
+         rounded-lg px-4 py-2 sm:px-2 sm:py-1 md:px-4
+         hover:bg-gray-100 dark:hover:bg-gray-800
+         cursor-pointer transition-colors duration-200"
+            >
+              <i-lucide [img]="Plus" class="w-5 h-5 text-blue-500"></i-lucide>
+              <p class="text-gray-700 dark:text-gray-200 text-sm font-medium">
+                Info
+              </p>
+            </div>
+
+          </div>
+        </div>
+      }
+    </div>
+    <button
+      class="flex justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-7 rounded-lg">
+      Ver todos los materiales
+    </button>
 
   </div>
 </section>
