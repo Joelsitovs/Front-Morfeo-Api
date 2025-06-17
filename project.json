@@ -49,10 +49,7 @@
           "optimization": true,
           "aot": true,
           "sourceMap": false,
-          "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true
         },
         "development": {
           "optimization": false,
