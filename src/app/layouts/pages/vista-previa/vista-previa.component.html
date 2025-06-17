@@ -1,0 +1,321 @@
+<section
+  class="w-full min-h-[calc(100vh-64px)] flex flex-col items-center pt-10  text-black dark:text-white transition-colors duration-300"
+>
+  <div class="w-full max-w-7xl mx-auto px-4 flex flex-col  gap-5">
+    <div class="flex justify-between items-center">
+      <div class="flex  items-center gap-2">
+        <div class="p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="lucide lucide-upload-icon lucide-upload">
+            <path d="M12 3v12" />
+            <path d="m17 8-5-5-5 5" />
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          </svg>
+        </div>
+        <span class="text-sm font-semibold ">
+
+        Subir modelo
+        </span>
+      </div>
+
+
+    </div>
+    <div class="flex flex-col gap-5">
+
+      <h2 class="text-2xl font-bold  text-start">
+        Arrastra o Carga tus Modelos 3D
+      </h2>
+
+      <div
+        class="w-full  bg-white  dark:bg-[#1e1e1e] p-5 rounded-xl gap-5 flex flex-col shadow-lg border  border-gray-200 dark:border-[#52525b]">
+
+        <div
+          class="w-full border-2 border-dotted border-[#52525b] rounded-lg text-center cursor-pointer
+         hover:bg-blue-50 dark:hover:bg-white/5 transition-all duration-300 flex flex-col justify-center items-center p-10 gap-5"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (keydown.enter)="triggerFileInput()"
+          (keydown.space)="triggerFileInput()"
+          role="button"
+          tabindex="0"
+          (click)="triggerFileInput()"
+          (drop)="onDrop($event)"
+          [class.bg-blue-100]="isDragging"
+        >
+          <input
+            type="file"
+            multiple
+            hidden
+            #fileInput
+            (change)="onFileSelect($event)"
+          />
+          <div class="w-10 h-10 flex items-center justify-center text-[#338ef7]">
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-cloud-upload-icon lucide-cloud-upload">
+              <path d="M12 13v8" />
+              <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+              <path d="m8 17 4-4 4 4" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-lg">Arrastrá tus archivos aquí</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">o hacé clic para seleccionar</p>
+          </div>
+          <div class="flex flex-wrap justify-center items-center gap-3 text-sm text-[#66aaf9] ">
+
+            <button
+              type="button"
+              (click)="triggerFileInput(); $event.stopPropagation()"
+
+              class="bg-[#338ef7]  text-white font-semibold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2 text-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="lucide lucide-file-plus-icon lucide-file-plus h-4 w-4">
+                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                <path d="M9 15h6" />
+                <path d="M12 18v-6" />
+              </svg>
+              <span class="text-xs">
+              Seleccionar Archivos
+            </span>
+            </button>
+            <button
+              type="button"
+              (click)="usarPiezaTest($event);$event.stopPropagation()"
+              class="border border-gray-400 dark:border-[#3f3f46] text-gray-600 dark:text-gray-300 font-semibold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2 text-sm"
+            >
+              <span class="text-xs">Utilizar pieza de test</span>
+            </button>
+
+          </div>
+
+          <div class="flex flex-wrap justify-center items-center gap-3 text-sm text-[#66aaf9] ">
+  <span
+    class="bg-[#338ef733] border border-[#66aaf955] dark:border-[#66aaf955] rounded-full px-3 h-6 flex items-center justify-center">
+    .stl
+  </span>
+            <span
+              class="bg-[#338ef733] border border-[#66aaf955] dark:border-[#66aaf955] rounded-full px-3 h-6 flex items-center justify-center">
+    .obj
+  </span>
+
+            <span
+              class="bg-[#338ef733] border border-[#66aaf955] dark:border-[#66aaf955] rounded-full px-3 h-6 flex items-center justify-center">
+    .glb
+  </span>
+
+          </div>
+        </div>
+        <div class="flex  gap-2 text-[#a1a1aa] items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="lucide lucide-lock-icon lucide-lock w-4 h-4 text-[#17c964]">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <span>Todos los archivos cargados son confidenciales. </span>
+        </div>
+
+
+      </div>
+
+      @if (archivos.length > 0) {
+        <div class="flex  items-center gap-2">
+          <div class="rounded-full   p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-settings-icon lucide-settings">
+              <path
+                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </div>
+          <span class="text-sm font-semibold ">
+
+        Configurar
+
+        </span>
+        </div>
+        <form class="space-y-6" >
+          @for (archivo of archivos; track archivo.filename) {
+            <!-- Encabezado -->
+            <div class="hidden md:grid grid-cols-6 gap-4 border-b pb-2 text-xs font-semibold text-gray-600 uppercase">
+              <div class="text-center md:text-left">Visor 3D</div>
+              <div>Piezas</div>
+              <div>Material</div>
+              <div class="text-center">Precio unitario</div>
+              <div class="text-center">Cantidad</div>
+              <div class="text-center">Total</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-6 gap-4 border-b  items-center relative">
+
+              <!-- Visor 3D (col 1) -->
+
+
+              <div class="flex items-center justify-center md:justify-start">
+                @if (archivo.thumbnail) {
+
+                  <button (click)="openDeviceConfigDialog(archivo.file, archivo.localUrl)"
+                          class="p-0 border-0 bg-transparent cursor-pointer">
+                    <img [src]="archivo.thumbnail"
+                         alt="Miniatura del modelo {{ archivo.file.name }}"
+                         class="w-32 h-auto rounded shadow" />
+                  </button>
+                } @else {
+                  <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-500"></div>
+
+                }
+              </div>
+
+              <!-- Piezas (col 2) -->
+              <div>
+                <p class="font-semibold text-sm">{{ archivo.filename }}</p>
+                @if (archivo.dimensions) {
+
+                  <p class="text-xs text-gray-500 ">
+                    {{ archivo.dimensions }}
+                  </p>
+                } @else {
+                  <p class="text-xs italic text-gray-400">Calculando dimensiones...</p>
+                }
+              </div>
+
+              <!-- Material y Color (col 3) -->
+              <div class="space-y-2 text-sm">
+                <div>
+                  <label class="block" for="material-{{ archivo.filename }}">Material:</label>
+                  <select
+                    [(ngModel)]="archivo.material"
+                    name="material-{{ archivo.filename }}"
+                    (change)="recalcularPrecio(archivo)"
+                    class="border rounded px-2 py-1 w-full">
+                    <option *ngFor="let mat of archivo.materials" [ngValue]="mat">
+                      {{ mat.name }} ({{ mat.price | number:'1.2-2' }} €/cm³)
+                    </option>
+                  </select>
+
+
+                </div>
+                <div>
+                  <label class="block" for="color-{{ archivo.filename }}">Color:</label>
+                  <select [(ngModel)]="archivo.color" name="color-{{ archivo.filename }}"
+                          class="border rounded px-2 py-1 w-full">
+                    <option *ngFor="let color of archivo.colors" [value]="color">{{ color }}</option>
+                  </select>
+                </div>
+
+              </div>
+
+
+              <!-- Precio unitario (col 4) -->
+              <div class="text-center text-sm font-medium">
+                @if (archivo.precioEstimado !== undefined) {
+                  <span>{{ archivo.precioEstimado | currency:'EUR':'symbol':'1.2-2' }}
+    </span>
+                } @else {
+                  <span class="text-xs italic text-gray-400">Calculando precio...</span>
+                }
+              </div>
+
+
+              <!-- Cantidad (col 5) -->
+              <div class="text-center">
+                <div class="flex items-center justify-center gap-1">
+                  <button
+                    class="w-8 h-8 border rounded font-bold"
+                    type="button"
+                    (click)="archivo.cantidad = Math.max((archivo.cantidad || 1) - 1, 1)">
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    [(ngModel)]="archivo.cantidad"
+                    name="cantidad-{{ archivo.filename }}"
+                    class="w-12 h-8 text-center border rounded text-black"
+                    min="1"
+                  />
+                  <button
+                    class="w-8 h-8 border rounded font-bold"
+                    type="button"
+                    (click)="archivo.cantidad = (archivo.cantidad || 1) + 1">
+                    +
+                  </button>
+                </div>
+<!--
+                <div class="text-xs text-blue-700 mt-1 underline cursor-pointer">Ver descuento por volumen</div>
+-->
+              </div>
+
+              <!-- Total (col 6) -->
+              <div class="text-center text-sm font-medium hidden sm:block">
+                @if (archivo.precioEstimado !== undefined) {
+                  {{
+                    (archivo.precioEstimado * (archivo.cantidad ?? 1)) |
+                      currency:'EUR':'symbol':'1.2-2'
+                  }}
+                } @else {
+                  <span class="text-xs italic text-gray-400">Calculando precio...</span>
+                }
+              </div>
+
+
+              <!-- Botón eliminar -->
+              <button
+                class="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                type="button"
+                (click)="eliminarArchivo(archivo)"
+                aria-label="Eliminar archivo">
+                ✕
+              </button>
+            </div>
+          }
+
+
+        </form>
+
+        <div class="w-full max-w-sm ml-auto mt-10
+            flex flex-col items-end bg-white dark:bg-[#1a1a1a]
+            rounded-xl shadow-md p-6 border border-gray-200 dark:border-neutral-700">
+
+          <div class="flex items-center justify-between w-full mb-4">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Resumen de tu pedido</h2>
+           <i-lucide [img]="ShoppingCart" class="w-6 h-6 text-blue-600"></i-lucide>
+          </div>
+
+          <div class="border-t border-b py-4 text-sm space-y-2 text-gray-700 dark:text-gray-300 w-full">
+            <div class="flex justify-between">
+              <span>Total de modelos:</span>
+              <span class="font-semibold">{{ archivos.length }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Precio total:</span>
+              <span class="font-bold text-gray-900 dark:text-white">
+        {{ getPrecioTotal() | currency:'EUR':'symbol':'1.2-2' }} (incluye IVA)
+      </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg mt-5 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="onProceedToPay()"
+            [disabled]="!puedePagar"
+          >
+            Proceder al pago
+          </button>
+
+
+        </div>
+
+      }
+
+    </div>
+  </div>
+
+</section>

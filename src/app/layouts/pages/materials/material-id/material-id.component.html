@@ -1,0 +1,40 @@
+<section
+  id="Materiales"
+  class="w-full min-h-[calc(100vh-4rem)] flex flex-col sm:flex-row items-start justify-center  px-4  overflow-hidden "
+>
+  <div class="flex flex-col items-center justify-center w-full gap-8 max-w-7xl mx-auto ">
+    @if (material) {
+      <h1
+        class="text-4xl md:text-5xl font-bold  dark:text-white text-gray-800 text-center "
+      >
+        Imprime en  {{ material.name }}
+      </h1>
+      <p
+        class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-6"
+      >
+        {{ material.short_description }}
+      </p>
+
+      <div class="flex  gap-4">
+        <div
+          class="prose dark:prose-invert max-w-none dark:text-gray-300"
+          [innerHTML]="material.content"
+        ></div>
+        <img
+          [src]="material.image_url"
+          width="600"
+          height="400"
+          alt="{{ material.name }}"
+          class="w-full max-w-md mx-auto mb-6 rounded-lg "
+        />
+      </div>
+
+
+    }
+<a routerLink="/vista-previa"
+  class="flex justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-7 rounded-lg">
+  Solicita tu impresion
+</a>
+
+  </div>
+</section>

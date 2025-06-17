@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="guardar()" class="max-w-md mx-auto space-y-4">
+  <label class="block">
+    <span class="text-sm font-medium">Nombre</span>
+    <input type="text" formControlName="name" class="w-full border p-2 rounded" />
+  </label>
+
+  <label class="block">
+    <span class="text-sm font-medium">Email</span>
+    <input type="email" formControlName="email" class="w-full border p-2 rounded" />
+  </label>
+
+  <div class="block">
+    <label for="roles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rol</label>
+    <select id="roles"
+            formControlName="roles"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <option *ngFor="let role of availableRoles" [value]="role">{{ role }}</option>
+    </select>
+  </div>
+
+  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+    Guardar cambios
+  </button>
+</form>

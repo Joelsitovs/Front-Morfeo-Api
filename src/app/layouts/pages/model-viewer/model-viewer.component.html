@@ -1,0 +1,18 @@
+<div class="flex flex-col items-center justify-center w-full py-6 gap-4">
+
+  <!-- Botón para cerrar -->
+  <button
+    (click)="dialogRef.close()"
+    class="self-end mr-6 "
+  >
+    <i-lucide [img]="X" class="w-6 h-6 text-gray-500"></i-lucide>
+
+  </button>
+
+  <!-- Canvas del visor 3D -->
+  <canvas
+    #canvas3d
+    class="w-[500px] h-[500px] bg-white dark:bg-[#1e1e1e] rounded-xl shadow border border-gray-300 dark:border-[#4b5563]"
+  ></canvas>
+
+</div>

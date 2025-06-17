@@ -2,6 +2,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { catchError, map, of, take } from 'rxjs';
 import { Auth2Service } from '../services/auth2.service';
+import { NavigationService } from '../services/navigation.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(Auth2Service);
@@ -48,7 +49,8 @@ export const RoleGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  console.log('[RoleGuard] No autorizado. Usuario sin rol admin');
+  console.log('[RoleGuard] No autorizado. Redirigiendo a /dashboard/pedidos');
+  router.navigateByUrl('/dashboard/pedidos');
   return false;
 };
 //reutilizable

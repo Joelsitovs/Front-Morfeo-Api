@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { User } from '../../interfaces/user.interface';
 import { catchError } from 'rxjs/operators';
-import { LoginForm } from '../../pages/auth/models/login-form.interface';
+import { LoginForm } from '../../layouts/pages/auth/models/login-form.interface';
 import {
   signInWithPopup,
   GoogleAuthProvider,

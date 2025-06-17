@@ -1,0 +1,234 @@
+<div class="dark:bg-black h-screen w-full flex overflow-hidden ">
+  <div
+    class="w-full md:w-full lg:w-1/2  h-screen flex flex-col justify-center items-center animate-fade-in-up ">
+    <div class="flex flex-col items-center w-full px-5 md:px-24 gap-10 dark:text-white">
+      <div class="flex flex-col w-full items-center justify-center gap-4">
+        <h1 class="text-3xl font-bold font-grotesk md:text-4xl  leading-snug tracking-tight">
+          Bienvenido a Morfeo3d</h1>
+        <button
+          class="w-full h-12 flex items-center justify-center gap-3 rounded-md bg-white dark:bg-background-light border border-gray-300 dark:border-[#161616] shadow-md hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out transform hover:scale-[1.03] active:scale-100"
+          (click)="signInWithGoogle()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            class="w-6 h-6"
+          >
+            <path
+              fill="#fbc02d"
+              d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12 s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20 s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+            />
+            <path
+              fill="#e53935"
+              d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039 l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+            />
+            <path
+              fill="#4caf50"
+              d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36 c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+            />
+            <path
+              fill="#1565c0"
+              d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571 c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+            />
+          </svg>
+          <span class="text-base font-medium tracking-tight dark:text-black">Iniciar sesión con Google</span>
+        </button>
+
+      </div>
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        class="flex flex-col w-full items-center justify-center gap-10"
+      >
+        <div class="relative w-full flex flex-col gap-2">
+          <label for="email" class="text-sm dark:text-gray-400  tracking-wide font-medium "
+          >Correo</label
+          >
+          <input
+            type="email"
+            [ngClass]="{'border-red-500': email.invalid && email.touched,'border-[#161616]': !(email.invalid && email.touched)}"
+            spellcheck="false"
+            autocomplete="email"
+            inputmode="email"
+            class="w-full p-2 rounded-md border dark:bg-[#070707] focus:ring-0 transition duration-300 ease-in-out tracking-wider hover:border-blue-500 focus:border-blue-500 shadow-inner"
+            formControlName="email"
+          />
+
+
+          <div *ngIf="email.invalid && email.touched"
+               class="transition-opacity duration-200 ease-in opacity-100 text-sm">
+            <p
+              class=" text-red-600 text-sm"
+              *ngIf="email?.errors?.['required']"
+            >
+              El email es obligatorio
+            </p>
+            <p class="text-red-600 " *ngIf="email?.errors?.['email']">
+              El email no es válido
+            </p>
+          </div>
+        </div>
+
+        <div class="relative w-full flex flex-col gap-2">
+          <div class="flex justify-between w-full">
+            <label for="password" class="text-sm dark:text-gray-400  tracking-wide font-medium">
+              Contraseña
+            </label>
+            <a
+              routerLink="/auth/recover"
+              class="text-sm text-blue-500 font-medium hover:underline hover:text-blue-400 transition"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+
+          <div class="relative w-full">
+            <input
+              (blur)="password.markAsTouched()"
+              [type]="showPassword ? 'text' : 'password'"
+              [ngClass]="{'border-red-500': password.invalid && password.touched,'border-[#161616]': !(password.invalid && password.touched)}"
+              class="w-full p-2 rounded-md border dark:bg-[#070707] focus:ring-0 transition duration-300 ease-in-out tracking-wider hover:border-blue-500 focus:border-blue-500"
+              formControlName="password"
+            />
+
+            <button
+              type="button"
+              id="eyePassword"
+              (mousedown)="preventBlur($event)"
+              (click)="tooglePasswordVisibility()"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-eye"
+              >
+                <path
+                  d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+
+          <div *ngIf="password.invalid && password.touched"
+               class=" transition-opacity duration-200 ease-in opacity-100 text-sm">
+            <p
+              class=" text-red-600"
+              *ngIf="password?.errors?.['required']"
+            >
+              La contraseña es obligatoria
+            </p>
+            <p
+              class="text-red-600 "
+              *ngIf="password?.errors?.['minlength']"
+            >
+              La contraseña debe tener al menos 6 caracteres
+            </p>
+          </div>
+        </div>
+        <div class="flex justify-between w-full text-sm">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" id="remember" class="checkbox-hidden" />
+            <label for="remember" class="custom-checkbox-label select-none">
+    <span class="custom-checkbox">
+      <svg
+        class="check-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    </span>
+              Mantener sesión
+            </label>
+          </div>
+
+          <div class="flex items-center gap-1 text-sm text-gray-400">
+            <p class="m-0">¿No tenés cuenta?</p>
+            <a
+              routerLink="/register"
+              class="text-blue-500 font-medium hover:text-blue-400 transition-colors duration-200 underline underline-offset-2"
+            >
+              Registrate
+            </a>
+          </div>
+
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message text-red-500">
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          class="text-base dark:text-white font-bold py-2 px-4 w-full border dark:border-[#161616] rounded-md transition disabled:bg-gray-300"
+        >
+          Iniciar sesión
+        </button>
+      </form>
+      <a
+        routerLink="/"
+        class="block text-base   text-center dark:bg-services_card-dark dark:text-white font-bold py-2 px-4 w-full border dark:border-[#161616] rounded-md transition"
+      >
+        Volver
+      </a>
+
+      <div class="flex items-center gap-2 justify-end w-full"></div>
+    </div>
+  </div>
+  <div class="hidden  w-full lg:w-1/2 lg:flex h-screen  flex-col justify-center items-center animate-fade-in-up">
+    <div
+      class="w-[90%] h-[90%] space-y-4 dark:text-text-dark relative overflow-hidden flex items-center justify-center text-red-500">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="123 412.86 170 198 "
+           class="h-[5rem] z-20"
+      >
+        <path
+          d=" M 123.5 460.71 L 208 413.43 L 292.5 460.71 L 292.5 562.29 L 208 610.58 L 123.5 562.29 L 123.5 460.71 Z  M 132.5 466 L 208 424 L 283 465.3 L 283 557.7 L 208.02 599 L 132 558.3 L 132.5 466 Z "
+          fill-rule="evenodd" fill="currentColor" />
+        <path
+          d=" M 135.97 464.01 L 208 423.43 L 283.5 464.7 L 283.5 509.29 L 208 552.58 L 172.5 532.29 L 172.5 509.29 L 172.5 532.29 L 208.02 552.58 L 283.5 509.29 L 283.5 519.15 L 283.5 558.3 L 208 599.57 L 131.5 558.3 L 128 464.08 L 135.97 464.01 L 207.98 503.57 L 234.98 488.01 L 208.02 471.42 L 193 479.43 L 208.02 471.42 L 234.98 488.01 L 208.01 503.57 L 135.97 464.01 Z  M 138.03 463.99 L 208 424.57 L 282.5 465.3 L 282.5 508.71 L 208 551.42 L 173.5 531.71 L 173.5 508.71 L 163.5 503.15 L 163.5 538.3 L 208 562.57 L 282.5 520.85 L 282.5 557.7 L 208 598.43 L 132.5 557.7 L 132.5 471.85 L 208.01 513.57 L 251.98 488.01 L 208.01 461.42 L 182.96 474.99 L 193 480.57 L 207.98 472.58 L 233.02 487.99 L 207.99 502.43 L 138.03 463.99 Z "
+          fill-rule="evenodd" fill="currentColor" />
+        <path
+          d=" M 271.5 472.71 L 271.5 502.29 L 233.5 523.86 L 233.5 512.7 L 262.5 496.7 L 262.5 478.3 L 208 448.57 L 167.94 469.6 L 161.12 463.92 L 208 437.43 L 271.5 472.71 Z  M 207.98 447.43 L 263.5 477.7 L 263.5 497.3 L 234.5 513.3 L 263.5 497.3 L 263.5 477.7 L 208 447.43 L 168.06 468.4 L 162.88 464.08 L 168.06 468.4 L 207.98 447.43 Z "
+          fill-rule="evenodd" fill="currentColor" />
+        <path
+          d=" M 208 526.44 L 222.5 519.19 L 222.5 530.29 L 208.01 538.57 L 184.5 526.3 L 184.5 515.21 L 208 526.44 Z  M 208.02 527.56 L 221.5 520.81 L 208.02 527.56 L 222.5 520 L 207.98 527.56 L 185.5 516.79 L 208.02 527.56 Z "
+          fill-rule="evenodd" fill="currentColor" />
+        <path
+          d=" M 143.5 493.23 L 153.5 497.68 L 153.5 544.7 L 208 574.43 L 271.5 540.16 L 271.5 550.29 L 208 585.57 L 143.5 550.3 L 143.5 493.23 Z  M 152.5 545.3 L 152.5 498.32 L 152.5 545.3 L 208 575.57 L 270.5 541.84 L 270.5 549.71 L 270.5 541.84 L 208.02 575.57 L 152.5 545.3 Z "
+          fill-rule="evenodd" fill="currentColor" />
+
+        <path
+          d=" M 123.5 460.71 L 208 413.43 L 292.5 460.71 L 292.5 562.29 L 208 610.58 L 123.5 562.29 L 123.5 460.71 Z  M 132.5 466 L 208 424 L 283 465.3 L 283 557.7 L 208.02 599 L 132 558.3 L 132.5 466 Z "
+          fill-rule="evenodd" fill="currentColor" />
+        <path
+          d=" M 135.97 464.01 L 208 423.43 L 283.5 464.7 L 283.5 509.29 L 208 552.58 L 172.5 532.29 L 172.5 509.29 L 172.5 532.29 L 208.02 552.58 L 283.5 509.29 L 283.5 519.15 L 283.5 558.3 L 208 599.57 L 131.5 558.3 L 128 464.08 L 135.97 464.01 L 207.98 503.57 L 234.98 488.01 L 208.02 471.42 L 193 479.43 L 208.02 471.42 L 234.98 488.01 L 208.01 503.57 L 135.97 464.01 Z  M 138.03 463.99 L 208 424.57 L 282.5 465.3 L 282.5 508.71 L 208 551.42 L 173.5 531.71 L 173.5 508.71 L 163.5 503.15 L 163.5 538.3 L 208 562.57 L 282.5 520.85 L 282.5 557.7 L 208 598.43 L 132.5 557.7 L 132.5 471.85 L 208.01 513.57 L 251.98 488.01 L 208.01 461.42 L 182.96 474.99 L 193 480.57 L 207.98 472.58 L 233.02 487.99 L 207.99 502.43 L 138.03 463.99 Z "
+          fill-rule="evenodd" fill="currentColor" />
+        <path
+          d=" M 271.5 472.71 L 271.5 502.29 L 233.5 523.86 L 233.5 512.7 L 262.5 496.7 L 262.5 478.3 L 208 448.57 L 167.94 469.6 L 161.12 463.92 L 208 437.43 L 271.5 472.71 Z  M 207.98 447.43 L 263.5 477.7 L 263.5 497.3 L 234.5 513.3 L 263.5 497.3 L 263.5 477.7 L 208 447.43 L 168.06 468.4 L 162.88 464.08 L 168.06 468.4 L 207.98 447.43 Z "
+          fill-rule="evenodd" fill="currentColor " />
+        <path
+          d=" M 208 526.44 L 222.5 519.19 L 222.5 530.29 L 208.01 538.57 L 184.5 526.3 L 184.5 515.21 L 208 526.44 Z  M 208.02 527.56 L 221.5 520.81 L 208.02 527.56 L 222.5 520 L 207.98 527.56 L 185.5 516.79 L 208.02 527.56 Z "
+          fill-rule="evenodd" fill="currentColor" />
+
+        <path
+          d=" M 143.5 493.23 L 153.5 497.68 L 153.5 544.7 L 208 574.43 L 271.5 540.16 L 271.5 550.29 L 208 585.57 L 143.5 550.3 L 143.5 493.23 Z  M 152.5 545.3 L 152.5 498.32 L 152.5 545.3 L 208 575.57 L 270.5 541.84 L 270.5 549.71 L 270.5 541.84 L 208.02 575.57 L 152.5 545.3 Z "
+          fill-rule="evenodd" fill="currentColor" />
+
+      </svg>
+      <div class="bg"></div>
+    </div>
+  </div>
+</div>

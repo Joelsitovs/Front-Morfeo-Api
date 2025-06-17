@@ -27,4 +27,11 @@ export class StorageService {
         .catch((err) => observer.error(err));
     });
   }
+
+  subirBlob(path: string, blob: Blob): Promise<string> {
+    const archivoRef = ref(this.storage, path);
+    return uploadBytes(archivoRef, blob)
+      .then(() => getDownloadURL(archivoRef));
+  }
+
 }

@@ -1,0 +1,20 @@
+<div class="flex flex-col items-center justify-center  min-h-[calc(100vh-64px)]   text-center px-4">
+  <div class=" p-8 rounded-2xl shadow-lg max-w-lg w-full border border-green-200">
+    <h1 class="text-3xl font-bold text-green-700 mb-2">¡Gracias por tu compra!</h1>
+    <p class="text-lg text-gray-700 mb-6">Tu pago se ha procesado correctamente </p>
+
+    <div class="text-sm text-gray-500 mb-4">
+      <span>ID de la sesión:</span>
+      <p class=" px-2 py-1 break-words">{{ sessionId }}</p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="/" class="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2 rounded-lg transition-all">
+        Volver al inicio
+      </a>
+      <a href="/perfil" class="bg-white border border-green-600 text-green-700 hover:bg-green-50 font-medium px-6 py-2 rounded-lg transition-all">
+        Ver mis pedidos
+      </a>
+    </div>
+  </div>
+</div>

@@ -9,3 +9,10 @@ export interface User {
   updated_at: string;
   roles: string[];
 }
+export interface BasicUser {
+  id: number;
+  name: string;
+  email: string;
+  created_at: string;
+  roles: string[];
+}
