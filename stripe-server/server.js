@@ -11,14 +11,11 @@ app.use(express.static('public'));
 app.use(
   cors({
     origin: 'https://morfeo3d.es',
-    credentials: true,
+    credentials: true
   })
 );
 app.use(bodyParser.json());
-app.options('*', cors({
-  origin: 'https://morfeo3d.es',
-  credentials: true,
-}));
+app.options('*', cors());
 
 const YOUR_DOMAIN = 'https://api.morfeo3d.es';
 app.post('/stripe/checkout', async (req, res) => {
@@ -27,11 +24,11 @@ app.post('/stripe/checkout', async (req, res) => {
       currency: 'usd',
       product_data: {
         name: item.name,
-        images: [item.image],
+        images: [item.image]
       },
-      unit_amount: Math.round(item.price * 100),
+      unit_amount: Math.round(item.price * 100)
     },
-    quantity: item.quantity,
+    quantity: item.quantity
   }));
 
   const session = await stripe.checkout.sessions.create({
@@ -41,9 +38,9 @@ app.post('/stripe/checkout', async (req, res) => {
     cancel_url: `${YOUR_DOMAIN}/canceled`,
     payment_intent_data: {
       metadata: {
-        items: JSON.stringify(req.body.items),
-      },
-    },
+        items: JSON.stringify(req.body.items)
+      }
+    }
   });
 
   res.json({ sessionId: session.id });
@@ -54,7 +51,7 @@ app.get('/stripe/session-status', async (req, res) => {
 
   res.send({
     status: session.status,
-    customer_email: session.customer_details.email,
+    customer_email: session.customer_details.email
   });
 });
 
