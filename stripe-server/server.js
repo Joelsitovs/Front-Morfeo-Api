@@ -17,7 +17,7 @@ app.use(
 app.use(bodyParser.json());
 app.options('*', cors());
 
-const YOUR_DOMAIN = 'https://api.morfeo3d.es';
+const YOUR_DOMAIN = 'https://morfeo3d.es';
 app.post('/stripe/checkout', async (req, res) => {
   const items = req.body.items.map((item) => ({
     price_data: {
