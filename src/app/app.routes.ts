@@ -42,7 +42,7 @@ export const appRoutes: Route[] = [
 
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: '',
   },
 
   /*  {

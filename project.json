@@ -49,7 +49,7 @@
           "optimization": true,
           "aot": true,
           "sourceMap": false,
-          "extractLicenses": true,
+          "extractLicenses": true
         },
         "development": {
           "optimization": false,
