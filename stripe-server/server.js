@@ -8,7 +8,12 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(express.static('public'));
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://morfeo3d.es',
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 const YOUR_DOMAIN = 'https://api.morfeo3d.es';
@@ -39,7 +44,6 @@ app.post('/checkout', async (req, res) => {
 
   res.json({ sessionId: session.id });
 });
-
 
 app.get('/session-status', async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
