@@ -85,17 +85,59 @@ Nx Console is an editor extension that enriches your developer experience. It le
 
 [Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-## Useful links
+## Documentación de Rutas en Morfeo3D
 
-Learn more:
+### Rutas principales (`appRoutes`)
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-standalone-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+| Ruta         | Acción                                   | Guardas               | Descripción                             |
+|--------------|-----------------------------------------|-----------------------|---------------------------------------|
+| `/`          | Carga módulo `LayoutsModule`             | Ninguno               | Rutas públicas y frontend general     |
+| `/dashboard` | Carga módulo `LayoutsDashModule`         | `authGuard`           | Panel de usuario autenticado           |
+| `/login`     | Carga componente `LoginComponent`        | `NoLoginGuard`        | Página de login para usuarios no logueados |
+| `/register`  | Carga componente `RegisterComponent`     | Ninguno               | Registro público                       |
+| `**`         | Carga componente `NotFoundComponent`     | Ninguno               | Página 404 para rutas no definidas    |
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
+
+### Módulo Dashboard (`LayoutsDashRoutingModule`)
+
+| Ruta                     | Componente               | Guardas         | Descripción                         |
+|--------------------------|--------------------------|-----------------|-----------------------------------|
+| `/panel`                 | `DashboardComponent`     | `RoleGuard`     | Panel administrativo               |
+| `/pedidos`               | `PedidosComponent`       | Ninguno         | Gestión de pedidos                 |
+| `/usuarios`              | `UserComponent`          | `RoleGuard`     | Listado de usuarios               |
+| `/usuarios/:id/editar`   | `UserEditComponent`      | `RoleGuard`     | Edición de usuario por ID         |
+
+---
+
+### Módulo Layouts Público (`LayoutsRoutingModule`)
+
+| Ruta                 | Componente                   | Descripción                       |
+|----------------------|------------------------------|---------------------------------|
+| `/`                  | `HomeComponent`               | Página principal                 |
+| `/success`            | `SucessComponent`             | Página de éxito                  |
+| `/materiales`         | `MaterialsComponent`          | Listado de materiales            |
+| `/materiales/:slug`   | `MaterialIdComponent`         | Detalle de material dinámico     |
+| `/vista-previa`       | `VistaPreviaComponent`        | Vista previa                    |
+| `/vision`             | `VisionComponent`             | Página visión                   |
+
+---
+
+### Guardas (Guards)
+
+- `authGuard`: Protege rutas para usuarios autenticados.
+- `NoLoginGuard`: Bloquea el acceso a login para usuarios ya autenticados.
+- `RoleGuard`: Controla acceso según roles específicos (e.g. admin).
+
+---
+
+### Características de las rutas
+
+- **Carga perezosa** con `loadChildren` y `loadComponent` para optimizar el rendimiento.
+- **Protección de rutas** con guardas para mantener seguridad y control de acceso.
+- **Ruta comodín `**`** para manejar páginas no encontradas (404) con componente personalizado.
+
+---
+
+### Resumen visual
+

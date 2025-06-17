@@ -1,6 +1,6 @@
 <!-- NAV SUPERIOR -->
 <nav
-  class="fixed top-0 left-0 bg-gray-800 h-14 text-white flex items-center px-4 transition-all duration-300 z-20"
+  class="fixed top-0 left-0  h-14 text-black dark:text-white flex items-center px-4 transition-all duration-300 z-20"
   [ngStyle]="{
     marginLeft: menuAbierto ? '13rem' : '0',
     width: menuAbierto ? 'calc(100% - 13rem)' : '100%'
@@ -12,6 +12,49 @@
     </button>
 
     <div class="flex items-center gap-4">
+      <button (click)="toggleTheme()" class="transition-all duration-300 ease-in-out">
+        @if (currentTheme() === 'dark') {
+          <svg
+            id="icon-sun"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-sun-medium transition-transform duration-300 ease-in-out hover:rotate-90"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 3v1" />
+            <path d="M12 20v1" />
+            <path d="M3 12h1" />
+            <path d="M20 12h1" />
+            <path d="m18.364 5.636-.707.707" />
+            <path d="m6.343 17.657-.707.707" />
+            <path d="m5.636 5.636.707.707" />
+            <path d="m17.657 17.657.707.707" />
+          </svg>
+        } @else {
+          <svg
+            id="icon-moon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-moon transition-transform duration-300 ease-in-out hover:rotate-45"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        }
+        </button>
       <!-- Botón Cerrar sesión -->
       <button (click)="logout()" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
         Cerrar sesión
@@ -51,12 +94,12 @@
 
 <!-- MENÚ LATERAL -->
 <nav
-  class="fixed top-0 left-0 h-screen w-52 text-white transition-all duration-300 z-10 border-r border-gray-200 dark:border-[#52525b]"
+  class="fixed top-0 left-0 h-screen w-52 dark:text-white text-black transition-all duration-300 z-10 border-r border-gray-200 dark:border-[#52525b]"
   [ngStyle]="{
     marginLeft: menuAbierto ? '0' : '-13rem'
   }"
 >
-  <div class="p-4 text-black">Morfeo Panel</div>
+  <div class="p-4 ">Morfeo Panel</div>
   <div class="flex flex-col gap-2 px-4">
     @if (isAdmin) {
 
