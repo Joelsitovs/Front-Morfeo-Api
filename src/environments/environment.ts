@@ -10,5 +10,5 @@ export const environment = {
     measurementId: 'G-4K15MWTGRT',
   },
   stipeKey:'pk_test_51QRc80JWHbvf2wryew1VpDCWtsneGa7W0zzrdZaVnEJsQrve7dQUPlYhw64e8hP8lNSPgTwnTID0Rwfm3TYR9W8000E336CQjY',
-  serverUlr:'http://localhost:4242',
+  serverUlr: 'https://api.morfeo3d.es:4242'
 };
