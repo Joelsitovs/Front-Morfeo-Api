@@ -11,5 +11,5 @@ export const environment = {
   },
   stipeKey:
     'pk_test_51QRc80JWHbvf2wryew1VpDCWtsneGa7W0zzrdZaVnEJsQrve7dQUPlYhw64e8hP8lNSPgTwnTID0Rwfm3TYR9W8000E336CQjY',
-  serverUlr: 'https://stripe-750705921113.europe-southwest1.run.app',
+  serverUlr: 'https://stripe-750705921113.europe-southwest1.run.app/stripe',
 };
