@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { authGuard, NoLoginGuard, RoleGuard } from './core/guard/auth.guard';
 import { SucessComponent } from './shared/components/sucess/sucess.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 export const appRoutes: Route[] = [
   {
@@ -8,18 +9,20 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('src/app/layouts/layouts.module').then((m) => m.LayoutsModule),
   },
-/*  {
-    path: 'dashboard',
-    loadComponent: () =>
-      import('src/app/layouts/pages/dashboard/dashboard.component').then(
-        (m) => m.DashboardComponent
-      ),
-    canActivate: [authGuard, RoleGuard],
-  },*/
+  /*  {
+      path: 'dashboard',
+      loadComponent: () =>
+        import('src/app/layouts/pages/dashboard/dashboard.component').then(
+          (m) => m.DashboardComponent
+        ),
+      canActivate: [authGuard, RoleGuard],
+    },*/
   {
-    path:'dashboard',
-    loadChildren:()=>
-      import('src/app/layouts-dash/layouts-dash.module').then(m=>m.LayoutsDashModule),
+    path: 'dashboard',
+    loadChildren: () =>
+      import('src/app/layouts-dash/layouts-dash.module').then(
+        (m) => m.LayoutsDashModule
+      ),
     canActivate: [authGuard],
   },
 
@@ -42,9 +45,8 @@ export const appRoutes: Route[] = [
 
   {
     path: '**',
-    redirectTo: '',
+    component: NotFoundComponent,
   },
-
   /*  {
     path: 'canceled',
     component: CancelPageComponent

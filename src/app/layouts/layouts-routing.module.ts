@@ -42,6 +42,13 @@ const routes: Routes = [
             (m) => m.VistaPreviaComponent
           ),
       },
+      {
+        path: 'vision',
+        loadComponent: () =>
+          import('src/app/layouts/pages/vision/vision.component').then(
+            (m) => m.VisionComponent
+          ),
+      }
     ],
   },
 ];

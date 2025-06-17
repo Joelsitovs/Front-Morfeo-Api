@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { LucideAngularModule, PenTool, Users, Package, Settings ,AlignJustify} from 'lucide-angular';
+import { LucideAngularModule, PenTool, Users, Package, Settings, AlignJustify, User } from 'lucide-angular';
 import { NgStyle } from '@angular/common';
 import { Auth2Service } from '../../core/services/auth2.service';
 
@@ -15,16 +15,24 @@ export class LayoutComponent implements OnInit {
   readonly Users = Users;
   readonly Package = Package;
   readonly AlignJustify = AlignJustify;
+  readonly User = User;
+  perfilAbierto = false;
 
   menuAbierto = true;
   isAdmin = false;
+
+  currentUser: any = null; // guardamos el usuario
 
   private authService = inject(Auth2Service);
   private router = inject(Router);
 
   ngOnInit(): void {
-    const user = this.authService.currentUser;
-    this.isAdmin = user?.roles?.includes('admin') ?? false;
+    // Suscribirse al usuario actual (puede ser null al inicio)
+    this.authService.user$.subscribe(user => {
+      this.currentUser = user;
+      this.isAdmin = user?.roles?.includes('admin') ?? false;
+    });
+
     const savedState = localStorage.getItem('menuAbierto');
     this.menuAbierto = savedState !== null ? JSON.parse(savedState) : true;
   }

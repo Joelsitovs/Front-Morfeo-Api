@@ -21,6 +21,13 @@ import {
 import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
+
+
+export interface RegisterForm {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -125,6 +132,32 @@ export class Auth2Service {
         })
       );
   }
+
+  register(form: RegisterForm): Observable<User | null> {
+    return this.getCSRFToken().pipe(
+      switchMap(() =>
+        this.http.post<{ user: User; roles: string[]; token?: string }>(
+          `${this.apiUrl}/api/register`,
+          form,
+          { withCredentials: true }
+        )
+      ),
+      tap((res) => {
+        const roles = res.roles ?? [];
+        if (res?.user) {
+          const userWithRoles = { ...res.user, roles };
+          this.setUser(userWithRoles);
+        }
+      }),
+      map((res) => res.user),
+      catchError((error) => {
+        this.clearUser();
+        console.error('Error en registro', error);
+        return of(null);
+      })
+    );
+  }
+
 
   async signInWithGoogle(): Promise<void> {
     try {

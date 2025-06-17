@@ -5,16 +5,49 @@
     marginLeft: menuAbierto ? '13rem' : '0',
     width: menuAbierto ? 'calc(100% - 13rem)' : '100%'
   }"
-><div class="flex items-center justify-between w-full">
+>
+  <div class="flex items-center justify-between w-full relative">
+    <button (click)="toggleMenu()" class="">
+      <i-lucide [img]="AlignJustify" class="w-5 h-5 text-blue-500"></i-lucide>
+    </button>
 
-  <button (click)="toggleMenu()" class="">
-    <i-lucide [img]="AlignJustify" class="w-5 h-5 text-blue-500"></i-lucide>
-  </button>
-  <button (click)="logout()" class="ml-4 bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
-    Cerrar sesión
-  </button>
-</div>
+    <div class="flex items-center gap-4">
+      <!-- Botón Cerrar sesión -->
+      <button (click)="logout()" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">
+        Cerrar sesión
+      </button>
+
+      <!-- Icono Perfil -->
+      <div class="relative">
+        <button (click)="perfilAbierto = !perfilAbierto" class="focus:outline-none">
+          <i-lucide [img]="User" class="w-6 h-6 text-white cursor-pointer"></i-lucide>
+        </button>
+
+        <!-- Div desplegable perfil -->
+        @if (perfilAbierto) {
+
+          <div
+            class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5"
+          >
+            <div class="py-2 px-4 border-b border-gray-200">
+              <p class="font-semibold">Usuario</p>
+              <p class="text-sm text-gray-600 truncate">{{ currentUser?.name }}</p>
+              <p class="text-xs text-gray-400 truncate">{{ currentUser?.email }}</p>
+            </div>
+            <button
+              (click)="logout()"
+              class="w-full text-left px-4 py-2 hover:bg-gray-100"
+            >
+              Cerrar sesión
+            </button>
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
 </nav>
+
 
 <!-- MENÚ LATERAL -->
 <nav
@@ -23,7 +56,7 @@
     marginLeft: menuAbierto ? '0' : '-13rem'
   }"
 >
-  <div class="p-4">Morfeo Panel</div>
+  <div class="p-4 text-black">Morfeo Panel</div>
   <div class="flex flex-col gap-2 px-4">
     @if (isAdmin) {
 
@@ -48,6 +81,14 @@
           Pedidos
         </p>
       </a>
+      <a routerLink="/dashboard"
+         class="flex p-2 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3 items-center justify-center border border-gray-200 dark:border-neutral-700 rounded-lg transition-all duration-300  cursor-pointer">
+        <i-lucide [img]="Package" class="w-5 h-5 text-blue-500"></i-lucide>
+        <p class="text-gray-700 dark:text-gray-200 text-sm font-medium">
+          Dashboard
+        </p>
+      </a>
+
     } @else {
       <a routerLink="/dashboard/pedidos"
          class="flex p-2 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3 items-center justify-center border border-gray-200 dark:border-neutral-700 rounded-lg transition-all duration-300  cursor-pointer">

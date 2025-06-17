@@ -10,12 +10,14 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'panel',
         loadComponent: () =>
           import(
             'src/app/layouts-dash/pages/dashboard/dashboard.component'
           ).then((m) => m.DashboardComponent),
+        canActivate: [RoleGuard],
       },
+
       {
         path: 'pedidos',
         loadComponent: () =>

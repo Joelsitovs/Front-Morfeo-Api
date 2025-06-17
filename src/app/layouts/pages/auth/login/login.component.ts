@@ -66,7 +66,7 @@ export class LoginComponent {
     this.auth.login(this.form.value).subscribe({
       next: (user) => {
         if (user) {
-          this.router.navigate(['/dashboard'], { replaceUrl: true });
+          this.router.navigate(['/dashboard/pedidos'], { replaceUrl: true });
         } else {
           this.errorMessage = 'Credenciales inválidas o error en login.';
         }
