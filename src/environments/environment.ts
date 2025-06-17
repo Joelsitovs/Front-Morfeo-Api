@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'http://localhost:8000',
+  apiUrl: 'https://api.morfeo3d.es',
   firebaseConf: {
     apiKey: 'AIzaSyCaV6SxWUJi_wvkyEsiSbvjVINXrWjO0Y0',
     authDomain: 'pf25-alain-joel.firebaseapp.com',
