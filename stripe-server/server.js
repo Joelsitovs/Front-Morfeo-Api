@@ -17,7 +17,7 @@ app.use(
 app.use(bodyParser.json());
 
 const YOUR_DOMAIN = 'https://api.morfeo3d.es';
-app.post('/checkout', async (req, res) => {
+app.post('/stripe/checkout', async (req, res) => {
   const items = req.body.items.map((item) => ({
     price_data: {
       currency: 'usd',
@@ -45,7 +45,7 @@ app.post('/checkout', async (req, res) => {
   res.json({ sessionId: session.id });
 });
 
-app.get('/session-status', async (req, res) => {
+app.get('/stripe/session-status', async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
 
   res.send({
