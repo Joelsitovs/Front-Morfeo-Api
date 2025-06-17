@@ -15,6 +15,10 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.options('*', cors({
+  origin: 'https://morfeo3d.es',
+  credentials: true,
+}));
 
 const YOUR_DOMAIN = 'https://api.morfeo3d.es';
 app.post('/stripe/checkout', async (req, res) => {
